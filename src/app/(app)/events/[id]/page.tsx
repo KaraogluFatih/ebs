@@ -32,7 +32,7 @@ export default async function EventPage({
   }
 
   const parsedRichText: SerializedEditorState<SerializedLexicalNode> | null =
-    event?.descriptionLong ? JSON.parse(event.descriptionLong) : null;
+    event?.descriptionLong ?? null;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -69,9 +69,7 @@ export default async function EventPage({
                   <h1 className="text-3xl font-bold tracking-tight text-primary md:text-4xl">
                     {event?.title}
                   </h1>
-                  <p className="mt-4 text-lg text-muted-foreground">
-                    {event?.descriptionLong}
-                  </p>
+                  <RichText data={parsedRichText} />
                 </div>
 
                 <Separator />

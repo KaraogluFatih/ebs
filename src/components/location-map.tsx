@@ -45,7 +45,7 @@ interface LocationMapProps {
   popupContent?: React.ReactNode;
 }
 
-export function LocationMap({
+export default function LocationMap({
   className = "",
   coordinates,
   popupContent,
