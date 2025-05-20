@@ -8,8 +8,14 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 
-export default async function ArticlePage(props: { params: { id: string } }) {
-  const { id } = props.params;
+type ArticlePageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const { id } = params;
   const article = await getArticleById(id);
 
   return (
