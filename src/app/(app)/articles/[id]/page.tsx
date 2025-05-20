@@ -1,16 +1,15 @@
-import Link from "next/link";
-import Image from "next/image";
-import { ChevronLeft, Share2 } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { RefreshRouteOnSave } from "@/components/RefreshRouteOnSave";
 import { Badge } from "@/components/ui/badge";
 import { getArticleById } from "@/data-access/collections/articles";
+import { ChevronLeft, Share2 } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 import { RichText } from "@payloadcms/richtext-lexical/react";
-import { RefreshRouteOnSave } from "@/components/RefreshRouteOnSave";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 export default async function ArticlePage(props: { params: { id: string } }) {
-  const { id } = await props.params; // now destructuring after receiving props
+  const { id } = props.params;
   const article = await getArticleById(id);
 
   return (
