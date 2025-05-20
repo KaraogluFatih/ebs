@@ -33,8 +33,6 @@ export default async function MediathekPage({
     ? await getVideoById(selectedVideoId).catch(() => null)
     : null;
 
-  console.log("Here is the selected Video: ", selectedVideo);
-
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">

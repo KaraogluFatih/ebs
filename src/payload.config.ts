@@ -20,6 +20,7 @@ import Partners from "./collections/Partners";
 import OpeningHours from "./collections/OpeningHours";
 import Directions from "./collections/Directions";
 import { FAQs } from "./collections/FAQs";
+import Documents from "./collections/Documents";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -31,7 +32,15 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Events, Articles, Videos, EventSignups],
+  collections: [
+    Users,
+    Media,
+    Events,
+    Articles,
+    Videos,
+    EventSignups,
+    Documents,
+  ],
   globals: [
     ContactInfo,
     MissionAndGoals,

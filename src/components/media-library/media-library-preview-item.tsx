@@ -15,13 +15,13 @@ export default function MediaLibraryPreviewItem({
   return (
     <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg hover:-translate-y-1 border border-primary/20">
       <div className="aspect-video relative overflow-hidden bg-primary/10">
-        <Image
+        {/* <Image
           src={video.thumbnail.url}
           alt={video.title}
           sizes="100vw"
           fill
           className="object-cover transition-transform group-hover:scale-105"
-        />
+        /> */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="rounded-full bg-accent p-3 shadow-lg group-hover:bg-accent/80 transition-all transform group-hover:scale-110">
             <svg
