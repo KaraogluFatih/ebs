@@ -5,18 +5,6 @@ const Articles: CollectionConfig = {
   slug: "articles",
   admin: {
     useAsTitle: "title",
-    livePreview: {
-      url: ({ data, collectionConfig }) => {
-        const baseUrl = data?.tenant?.url || "https://default-domain.com";
-
-        if (collectionConfig.slug === "articles") {
-          return `http://localhost:3000/articles/${data.id}`;
-        }
-
-        return baseUrl;
-      },
-      collections: ["articles"],
-    },
   },
   fields: [
     {

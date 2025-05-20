@@ -9,14 +9,13 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
 
-type ArticlePageProps = {
-  params: {
-    id: string;
-  };
-};
-
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  const article = await getArticleById(params.id);
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const article = await getArticleById(id);
 
   if (!article) {
     notFound();

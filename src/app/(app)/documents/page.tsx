@@ -7,10 +7,11 @@ import DocumentsTabs from "@/components/documents/documents-tabs";
 export default async function DocumentsPage({
   searchParams,
 }: {
-  searchParams: { page?: string; search?: string };
+  searchParams: Promise<{ page?: string; search?: string }>;
 }) {
-  const page = Number.parseInt(searchParams.page || "1");
-  const search = searchParams.search || "";
+  const { page: pageStr, search = "" } = await searchParams;
+
+  const page = Number.parseInt(pageStr || "1");
 
   const { documents, totalPages, currentPage } = await getDocuments(
     page,

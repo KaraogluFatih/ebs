@@ -35,7 +35,9 @@ export default async function RootLayout({
             street={contactInfo.street}
             postalCode={contactInfo.postalCode}
             city={contactInfo.city}
-            coordinates={[0, 0]}
+            coordinates={contactInfo.coordinates}
+            latitude={contactInfo.latitude}
+            longitude={contactInfo.longitude}
           />
           {children}
           <SiteFooter
@@ -45,7 +47,9 @@ export default async function RootLayout({
             city={contactInfo.city}
             phone={contactInfo.phone}
             email={contactInfo.email}
-            coordinates={[0, 0]}
+            coordinates={contactInfo.coordinates}
+            latitude={0}
+            longitude={0}
           />
         </ThemeProvider>
         <Toaster />

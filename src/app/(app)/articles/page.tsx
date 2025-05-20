@@ -3,18 +3,20 @@ import ArticlesFilter from "@/components/articles/articles-filter";
 import ArticlesTabs from "@/components/articles/articles-tabs";
 import { redirect } from "next/navigation";
 
-interface ArticlesPageProps {
-  searchParams?: {
+type ArticlesPageProps = {
+  searchParams: Promise<{
     page?: string;
     search?: string;
-  };
-}
+  }>;
+};
 
 export default async function ArticlesPage({
   searchParams,
 }: ArticlesPageProps) {
-  const currentPage = Number(searchParams?.page ?? "1");
-  const searchQuery = searchParams?.search ?? "";
+  const { page, search } = await searchParams;
+
+  const currentPage = Number(page ?? "1");
+  const searchQuery = search ?? "";
 
   if (currentPage < 1) redirect("/articles");
 

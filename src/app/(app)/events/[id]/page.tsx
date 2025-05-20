@@ -16,17 +16,23 @@ import { Badge } from "@/components/ui/badge";
 import { getEventById } from "@/data-access/collections/events";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { SignupDialog } from "@/components/events/event-sign-up-form";
+import type { SerializedEditorState, SerializedLexicalNode } from "lexical";
 
 export default async function EventPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const event = await getEventById(params.id);
+  const { id } = await params;
+
+  const event = await getEventById(id);
 
   if (event === undefined) {
     return <div>Ups da ist etwas schiefgelaufen!</div>;
   }
+
+  const parsedRichText: SerializedEditorState<SerializedLexicalNode> | null =
+    event?.descriptionLong ? JSON.parse(event.descriptionLong) : null;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -61,10 +67,10 @@ export default async function EventPage({
 
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight text-primary md:text-4xl">
-                    {event.title}
+                    {event?.title}
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                    {event.description}
+                    {event?.descriptionLong}
                   </p>
                 </div>
 
@@ -81,7 +87,7 @@ export default async function EventPage({
                           year: "numeric",
                           month: "long",
                           day: "numeric",
-                        }).format(new Date(event.date))}
+                        }).format(new Date(event?.date || ""))}
                       </p>
                     </div>
                   </div>
@@ -89,14 +95,14 @@ export default async function EventPage({
                     <Clock className="h-5 w-5 text-accent" />
                     <div>
                       <p className="font-medium">Uhrzeit</p>
-                      <p className="text-muted-foreground">{event.time}</p>
+                      <p className="text-muted-foreground">{event?.time}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <MapPin className="h-5 w-5 text-accent" />
                     <div>
                       <p className="font-medium">Ort</p>
-                      <p className="text-muted-foreground">{event.location}</p>
+                      <p className="text-muted-foreground">{event?.location}</p>
                     </div>
                   </div>
                 </div>
@@ -108,7 +114,7 @@ export default async function EventPage({
                     Details
                   </h2>
                   <div className="prose max-w-none">
-                    <RichText data={event?.descriptionLong} />
+                    <RichText data={parsedRichText} />
                   </div>
                 </div>
               </div>
@@ -123,25 +129,25 @@ export default async function EventPage({
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Kosten:</span>
-                    <span className="font-medium">{event.cost}</span>
+                    <span className="font-medium">{event?.cost}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Veranstalter:</span>
-                    <span className="font-medium">{event.organizer}</span>
+                    <span className="font-medium">{event?.organizer}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Teilnehmer:</span>
                     <div className="flex items-center">
                       <Users className="h-4 w-4 mr-1 text-muted-foreground" />
                       <span className="font-medium">
-                        {event.currentParticipants}/{event.maxParticipants}
+                        {event?.currentParticipants}/{event?.maxParticipants}
                       </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <SignupDialog eventId={event.id} eventTitle={event?.title} />
+                  <SignupDialog eventId={event?.id} eventTitle={event?.title} />
                   <div className="flex gap-2">
                     <Button variant="outline" size="icon" className="flex-1">
                       <Share2 className="h-4 w-4" />

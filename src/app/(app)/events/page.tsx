@@ -4,15 +4,17 @@ import EventsFilter from "@/components/events/events-filter";
 import EventsTabs from "@/components/events/event-tabs";
 
 interface EventsPageProps {
-  searchParams?: {
+  searchParams: Promise<{
     page?: string;
     search?: string;
-  };
+  }>;
 }
 
 export default async function EventsPage({ searchParams }: EventsPageProps) {
-  const currentPage = Number(searchParams?.page ?? "1");
-  const searchQuery = searchParams?.search ?? "";
+  const { page, search } = await searchParams;
+
+  const currentPage = Number(page ?? "1");
+  const searchQuery = search ?? "";
 
   if (currentPage < 1) redirect("/events");
 

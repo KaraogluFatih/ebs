@@ -11,20 +11,20 @@ import MediaLibraryFilter from "@/components/media-library/media-library-filter"
 import { MAX_PAGE_SIZE } from "./media-library.definitions";
 
 interface MediaLibraryPageProps {
-  searchParams?: {
+  searchParams?: Promise<{
     page?: string;
     search?: string;
     selectedVideoId?: string;
-  };
+  }>;
 }
 
 export default async function MediathekPage({
   searchParams,
 }: MediaLibraryPageProps) {
-  const selectedVideoId = (await searchParams?.selectedVideoId) ?? "";
-
-  const currentPage = Number((await searchParams?.page) ?? "1");
-  const searchQuery = (await searchParams?.search) ?? "";
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const currentPage = Number(resolvedSearchParams.page ?? "1");
+  const searchQuery = resolvedSearchParams.search ?? "";
+  const selectedVideoId = resolvedSearchParams.selectedVideoId ?? "";
 
   if (currentPage < 1) redirect("/events");
 

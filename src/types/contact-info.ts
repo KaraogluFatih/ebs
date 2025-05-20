@@ -6,4 +6,6 @@ export interface ContactInfo {
   phone?: string;
   email?: string;
   coordinates: [number, number];
+  latitude: number;
+  longitude: number;
 }
