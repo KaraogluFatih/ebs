@@ -7,6 +7,7 @@ import Image from "next/image";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { notFound } from "next/navigation";
 
 type ArticlePageProps = {
   params: {
@@ -15,8 +16,11 @@ type ArticlePageProps = {
 };
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { id } = params;
-  const article = await getArticleById(id);
+  const article = await getArticleById(params.id);
+
+  if (!article) {
+    notFound();
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
