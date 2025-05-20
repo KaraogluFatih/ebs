@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { LocationMap } from "@/components/location-map";
 import { getTeam } from "@/data-access/globals/team";
 import { getMission } from "@/data-access/globals/missionAndGoals";
 import { getPartners } from "@/data-access/globals/partners";
@@ -24,6 +23,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ContactForm } from "@/components/contact-form";
+import LocationMapWrapper from "@/components/location-map-client";
 
 export default async function AboutUsPage() {
   const team = await getTeam();
@@ -221,7 +221,7 @@ export default async function AboutUsPage() {
 
             <div className="grid gap-10 lg:grid-cols-2">
               <div>
-                <LocationMap
+                <LocationMapWrapper
                   coordinates={[contact.coordinates[0], contact.coordinates[1]]}
                   popupContent={
                     <div className="p-1">
@@ -230,7 +230,7 @@ export default async function AboutUsPage() {
                       {contact.street}, {contact.postalCode} {contact.city}
                       <br />
                       <a
-                        href={`https://maps.google.com/?q=${contact.latitude},${contact.longitude}`}
+                        href={`https://maps.google.com/?q=${contact.coordinates[0]},${contact.coordinates[1]}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary hover:underline text-sm"

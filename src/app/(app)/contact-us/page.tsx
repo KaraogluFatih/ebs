@@ -19,12 +19,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
-import { LocationMap } from "@/components/location-map";
+
 import { ContactForm } from "@/components/contact-form";
 import { getContactInfo } from "@/data-access/globals/contact-info";
 import { getOpeningHours } from "@/data-access/globals/opening-hours";
 import { getDirections } from "@/data-access/globals/directions";
 import { getFaqs } from "@/data-access/globals/faqs";
+import LocationSection from "@/components/location-section";
 
 export default async function ContactPage() {
   const contactInfo = await getContactInfo();
@@ -238,27 +239,10 @@ export default async function ContactPage() {
               </p>
             </div>
 
-            <div className="rounded-xl overflow-hidden shadow-lg">
-              <LocationMap
-                className="h-[500px]"
-                coordinates={contactInfo.coordinates}
-              />
-            </div>
-
-            <div className="grid gap-8 mt-12 md:grid-cols-3">
-              {directions.options.map((option) => (
-                <Card key={option.label}>
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-lg mb-4 flex items-center">
-                      {option.label}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {option.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <LocationSection
+              coordinates={contactInfo.coordinates}
+              directions={directions.options}
+            />
           </div>
         </section>
         {/* FAQ Section */}
